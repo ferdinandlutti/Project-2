@@ -39,8 +39,8 @@ function FirstRoundScreen4({ route, navigation }) {
                 Consequence for {selectedPlayer}!
               </Text>
               <Text style={styles.modalText}>
-                You must address the winner of this round as 'darling'. Failing
-                to do so results in 2 sips.
+                You must address the winner of this round as 'darling' every
+                time you speak to them. Failing to do so results in 2 sips.
               </Text>
               <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}

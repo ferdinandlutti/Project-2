@@ -26,7 +26,7 @@ function FirstRoundScreen2({ route, navigation }) {
             <View style={styles.slide}>
               <Text style={styles.text}>1 </Text>
               <Text style={styles.text}>
-                You both add a word to a sentence in turns.
+                You all add a word to a sentence in turns.
               </Text>
             </View>
             <View style={styles.slide}>
@@ -45,7 +45,7 @@ function FirstRoundScreen2({ route, navigation }) {
             <View style={styles.slide}>
               <Text style={styles.text}>Example</Text>
               <Text style={styles.textExample}>
-                Person 1: "Tomatoes"... Person 2: "Tomatoes are"... Person 1:
+                Person 1: "Tomatoes"... Person 2: "Tomatoes are"... Person 3:
                 "Tomatoes are horrible..."
               </Text>
               <Text style={styles.textExample}>

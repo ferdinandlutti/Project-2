@@ -1,6 +1,7 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
 import image2 from "../assets/images/imagefriends.png";
+import image1 from "../assets/images/background-image.png";
 
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
@@ -10,7 +11,7 @@ export default function Register({ navigation }) {
     <View style={styles.container}>
       <LinearGradient colors={["#F5C27A", "#FA922F"]} style={styles.container}>
         <View style={styles.container}>
-          <Image source={image2} style={styles.image} />
+          <Image source={image1} style={styles.image} />
 
           <Text style={styles.header}>Register Players</Text>
           <Text style={styles.text}>

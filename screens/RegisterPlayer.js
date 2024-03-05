@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import image2 from "../assets/images/imagefriends.png";
+import { KeyboardAvoidingView, Platform } from "react-native";
 
 import {
   StyleSheet,
@@ -32,43 +33,49 @@ export default function RegisterPlayer({ navigation }) {
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#F5C27A", "#FA922F"]} style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <Text style={styles.header}>Register Players</Text>
-          <View style={styles.container}>
-            <TextInput
-              style={styles.input}
-              onChangeText={setPlayerName}
-              value={playerName}
-              placeholder="Enter Player Name"
-              placeholderTextColor="#fff"
-            />
-            <TouchableOpacity style={styles.button} onPress={addPlayer}>
-              <Text style={styles.buttonText}>Add Player</Text>
-            </TouchableOpacity>
-            {players.map((player, index) => (
-              <View key={index} style={styles.playerContainer}>
-                <Text style={styles.playerNumber}>{index + 1}.</Text>
-                <Text style={styles.playerName}>{player}</Text>
-                <TouchableOpacity
-                  style={styles.deleteButton}
-                  onPress={() => removePlayer(index)}
-                >
-                  <Text style={styles.deleteButtonText}>X</Text>
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
+        >
+          <ScrollView contentContainerStyle={styles.scrollViewContent}>
+            <Text style={styles.header}>Register Players</Text>
+            <View style={styles.container}>
+              <TextInput
+                style={styles.input}
+                onChangeText={setPlayerName}
+                value={playerName}
+                placeholder="Enter Player Name"
+                placeholderTextColor="#fff"
+              />
+              <TouchableOpacity style={styles.button} onPress={addPlayer}>
+                <Text style={styles.buttonText}>Add Player</Text>
+              </TouchableOpacity>
+              {players.map((player, index) => (
+                <View key={index} style={styles.playerContainer}>
+                  <Text style={styles.playerNumber}>{index + 1}.</Text>
+                  <Text style={styles.playerName}>{player}</Text>
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => removePlayer(index)}
+                  >
+                    <Text style={styles.deleteButtonText}>X</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
 
-          <TouchableOpacity
-            style={styles.button2}
-            onPress={() =>
-              navigation.navigate("GameScreen", { players: players })
-            }
-          >
-            <Text style={styles.buttonText}>OK, we are ready</Text>
-          </TouchableOpacity>
-        </ScrollView>
-        <StatusBar style="auto" />
+            <TouchableOpacity
+              style={styles.button2}
+              onPress={() =>
+                navigation.navigate("GameScreen", { players: players })
+              }
+            >
+              <Text style={styles.buttonText}>OK, we are ready</Text>
+            </TouchableOpacity>
+          </ScrollView>
+          <StatusBar style="auto" />
+        </KeyboardAvoidingView>
       </LinearGradient>
     </View>
   );

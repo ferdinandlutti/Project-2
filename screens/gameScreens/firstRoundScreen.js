@@ -4,15 +4,14 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 function firstRoundScreen({ route, navigation }) {
-  const { players } = route.params; // This will now be the entire array
+  const { players } = route.params;
 
-  const firstPlayerName = players[0]; // Access the first player's name
+  const firstPlayerName = players[0];
 
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#FFC692", "#FA922F"]} style={styles.container}>
         <Text style={styles.header}>Pass the phone to {firstPlayerName}</Text>
-        {/* Rest of your round setup */}
         <TouchableOpacity
           style={styles.button}
           onPress={() => {

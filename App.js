@@ -14,8 +14,9 @@ import secondRoundScreen2 from "./screens/gameScreens/secondRoundScreen2";
 import secondRoundScreen3 from "./screens/gameScreens/secondRoundScreen3";
 import thirdRoundScreen from "./screens/gameScreens/thirdRoundScreen";
 import thirdRoundScreen2 from "./screens/gameScreens/thirdRoundScreen2";
-thirdRoundScreen3;
-
+import ReactionGameScreen from "./screens/gameScreens/ReactionGameScreen";
+import ReactionResultsScreen from "./screens/gameScreens/ReactionResultsScreen";
+import ReactionLeaderboard from "./screens/gameScreens/ReactionLeaderboard";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -93,8 +94,16 @@ export default function App() {
             component={thirdRoundScreen2}
           />
           <Stack.Screen
-            name="thirdRoundScreen3"
-            component={thirdRoundScreen3}
+            name="ReactionGameScreen"
+            component={ReactionGameScreen}
+          />
+          <Stack.Screen
+            name="ReactionResultsScreen"
+            component={ReactionResultsScreen}
+          />
+          <Stack.Screen
+            name="ReactionLeaderboard"
+            component={ReactionLeaderboard}
           />
         </Stack.Navigator>
       </NavigationContainer>

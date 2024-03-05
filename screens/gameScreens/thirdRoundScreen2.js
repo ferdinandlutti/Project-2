@@ -10,15 +10,15 @@ function thirdRoundScreen2({ route, navigation }) {
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#003601", "#FA922F"]} style={styles.container}>
-        <Text style={styles.header}>Game of music</Text>
+        <Text style={styles.header}>Game of reactions</Text>
         <Text style={styles.text}>
-          OK {thirdPlayerName}, time for you to get groovy! 🕺 Choose your
-          opponent, Press 'Start' when you are both ready🚀
+          OK {thirdPlayerName}, time for you to test your reactions! 🕺 Choose
+          your opponent, Press 'Start' when you are both ready🚀
         </Text>
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("thirdRoundScreen3", {
+            navigation.navigate("ReactionGameScreen", {
               players: players,
             });
           }}

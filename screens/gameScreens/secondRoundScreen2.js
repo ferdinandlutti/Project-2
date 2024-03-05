@@ -12,8 +12,8 @@ function secondRoundScreen2({ route, navigation }) {
       <LinearGradient colors={["#003601", "#FA922F"]} style={styles.container}>
         <Text style={styles.header}>Game of categories</Text>
         <Text style={styles.text}>
-          OK {secondPlayerName}, time for you to look smart for a change! 🥸
-          Choose your opponent, Press 'Start' when you are both ready🚀
+          OK {secondPlayerName}, time for you to try and look smart for a
+          change! 🥸 Press 'Go To Next Round' when everybody is ready🚀
         </Text>
         <TouchableOpacity
           style={styles.button}
@@ -23,7 +23,7 @@ function secondRoundScreen2({ route, navigation }) {
             });
           }}
         >
-          <Text style={styles.buttonText}>Start</Text>
+          <Text style={styles.buttonText}>Go To Next Round</Text>
         </TouchableOpacity>
       </LinearGradient>
     </View>
