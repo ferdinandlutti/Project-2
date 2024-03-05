@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text } from "react-native";
 
-const TypingAnimation = ({ text, typingSpeed = 150 }) => {
+const TypingAnimation = ({ text, typingSpeed = 150, textStyle }) => {
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const TypingAnimation = ({ text, typingSpeed = 150 }) => {
     return () => clearInterval(timer);
   }, [text, typingSpeed]);
 
-  return <Text style={[styles.text]}>{displayedText}</Text>;
+  return <Text style={[styles.text, textStyle]}>{displayedText}</Text>;
 };
 const styles = StyleSheet.create({
   text: {

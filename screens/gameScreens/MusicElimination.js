@@ -9,11 +9,8 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const ReactionLeaderboard = ({ route, navigation }) => {
-  const { reactionTimes } = route.params;
+const MusicElimination = ({ route, navigation }) => {
   const { players } = route.params;
-
-  const sortedTimes = [...reactionTimes].sort((a, b) => a.time - b.time);
 
   return (
     <LinearGradient
@@ -22,7 +19,7 @@ const ReactionLeaderboard = ({ route, navigation }) => {
     >
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.container}>
-          <Text style={styles.header}>Reaction Time Leaderboard</Text>
+          <Text style={styles.header}>Music Elimination Round</Text>
           {sortedTimes.map((player, index) => (
             <View key={index} style={styles.resultRow}>
               <Text style={styles.playerRank}>{index + 1}</Text>
@@ -33,7 +30,7 @@ const ReactionLeaderboard = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("SimpleChallenges", {
+              navigation.navigate("SecondRoundScreen", {
                 players: players,
               });
             }}
@@ -61,25 +58,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: "Papyrus-Condensed",
   },
-  resultRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 10,
-    alignItems: "center",
-  },
-  playerRank: {
-    fontWeight: "bold",
-    fontSize: 18,
-    fontFamily: "Noteworthy-Light",
-  },
-  playerName: {
-    fontSize: 18,
-    fontFamily: "Noteworthy-Light",
-  },
-  playerTime: {
-    fontSize: 18,
-    fontFamily: "Noteworthy-Light",
-  },
+
   button: {
     backgroundColor: "#FFFFFF",
     width: "60%",
@@ -113,4 +92,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ReactionLeaderboard;
+export default MusicElimination;

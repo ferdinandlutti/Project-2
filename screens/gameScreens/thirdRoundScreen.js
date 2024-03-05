@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-function thirdRoundScreen({ route, navigation }) {
+function ThirdRoundScreen({ route, navigation }) {
   const { players } = route.params; // This will now be the entire array
 
   const thirdPlayerName = players[2] ? players[2] : players[0];
@@ -16,7 +16,7 @@ function thirdRoundScreen({ route, navigation }) {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("thirdRoundScreen2", {
+            navigation.navigate("ThirdRoundScreen2", {
               players: players,
             });
           }}
@@ -72,4 +72,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default thirdRoundScreen;
+export default ThirdRoundScreen;

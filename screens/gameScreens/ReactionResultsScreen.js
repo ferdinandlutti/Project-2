@@ -27,6 +27,7 @@ const ReactionResultsScreen = ({ route, navigation }) => {
         <ScrollView style={styles.container}>
           <TypingAnimation
             text={`Woow ${winnerName}, you are completely DESTROYING your opponents today!`}
+            textStyle={{ fontSize: 24, color: "white" }}
           />
 
           <Image
@@ -39,6 +40,7 @@ const ReactionResultsScreen = ({ route, navigation }) => {
             onPress={() => {
               navigation.navigate("ReactionLeaderboard", {
                 players: players,
+                reactionTimes: reactionTimes,
               });
             }}
           >
@@ -66,21 +68,21 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: "Papyrus-Condensed",
     color: "white",
-    textAlign: "center", // Ensure multi-line text is centered
+    textAlign: "center",
   },
   subHeader: {
     fontSize: 45,
     fontWeight: "bold",
     marginBottom: 20,
     fontFamily: "Papyrus-Condensed",
-    textAlign: "center", // Ensure multi-line text is centered
+    textAlign: "center",
   },
   resultRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10,
     alignItems: "center",
-    width: "100%", // Ensure this occupies the full width for proper spacing
+    width: "100%",
   },
   playerRank: {
     fontWeight: "bold",

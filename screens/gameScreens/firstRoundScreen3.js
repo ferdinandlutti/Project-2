@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Swiper from "react-native-swiper";
 
-function FirstRoundScreen2({ route, navigation }) {
+function FirstRoundScreen3({ route, navigation }) {
   const { players } = route.params;
 
   return (
@@ -57,7 +57,7 @@ function FirstRoundScreen2({ route, navigation }) {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("firstRoundScreen4", {
+            navigation.navigate("FirstRoundScreen4", {
               players: players,
             });
           }}
@@ -170,4 +170,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FirstRoundScreen2;
+export default FirstRoundScreen3;

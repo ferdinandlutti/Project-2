@@ -51,7 +51,7 @@ function FirstRoundScreen2({ route, navigation }) {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("firstRoundScreen3", {
+            navigation.navigate("FirstRoundScreen3", {
               players: players,
             });
           }}

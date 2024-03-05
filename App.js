@@ -2,21 +2,24 @@ import Home from "./screens/Home";
 import Register from "./screens/Register";
 import RegisterPlayer from "./screens/RegisterPlayer";
 import GameScreen from "./screens/GameScreen";
-import firstRoundScreen from "./screens/gameScreens/firstRoundScreen";
+import FirstRoundScreen from "./screens/gameScreens/FirstRoundScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DataProvider } from "./context/DataContext";
-import firstRoundScreen2 from "./screens/gameScreens/firstRoundScreen2";
-import firstRoundScreen3 from "./screens/gameScreens/firstRoundScreen3";
-import firstRoundScreen4 from "./screens/gameScreens/firstRoundScreen4";
-import secondRoundScreen from "./screens/gameScreens/secondRoundScreen";
-import secondRoundScreen2 from "./screens/gameScreens/secondRoundScreen2";
-import secondRoundScreen3 from "./screens/gameScreens/secondRoundScreen3";
-import thirdRoundScreen from "./screens/gameScreens/thirdRoundScreen";
-import thirdRoundScreen2 from "./screens/gameScreens/thirdRoundScreen2";
+import FirstRoundScreen2 from "./screens/gameScreens/FirstRoundScreen2";
+import FirstRoundScreen3 from "./screens/gameScreens/FirstRoundScreen3";
+import FirstRoundScreen4 from "./screens/gameScreens/FirstRoundScreen4";
+import SecondRoundScreen from "./screens/gameScreens/SecondRoundScreen";
+import SecondRoundScreen2 from "./screens/gameScreens/SecondRoundScreen2";
+import SecondRoundScreen3 from "./screens/gameScreens/SecondRoundScreen3";
+import ThirdRoundScreen from "./screens/gameScreens/ThirdRoundScreen";
+import ThirdRoundScreen2 from "./screens/gameScreens/ThirdRoundScreen2";
 import ReactionGameScreen from "./screens/gameScreens/ReactionGameScreen";
 import ReactionResultsScreen from "./screens/gameScreens/ReactionResultsScreen";
 import ReactionLeaderboard from "./screens/gameScreens/ReactionLeaderboard";
+import MusicElimination from "./screens/gameScreens/MusicElimination";
+import SimpleChallenges from "./screens/gameScreens/SimpleChallenges";
+import CaptionGame from "./screens/gameScreens/CaptionGame";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -63,35 +66,35 @@ export default function App() {
               headerTintColor: "black",
             }}
           />
-          <Stack.Screen name="firstRoundScreen" component={firstRoundScreen} />
+          <Stack.Screen name="FirstRoundScreen" component={FirstRoundScreen} />
           <Stack.Screen
-            name="firstRoundScreen2"
-            component={firstRoundScreen2}
+            name="FirstRoundScreen2"
+            component={FirstRoundScreen2}
           />
           <Stack.Screen
-            name="firstRoundScreen3"
-            component={firstRoundScreen3}
+            name="FirstRoundScreen3"
+            component={FirstRoundScreen3}
           />
           <Stack.Screen
-            name="firstRoundScreen4"
-            component={firstRoundScreen4}
+            name="FirstRoundScreen4"
+            component={FirstRoundScreen4}
           />
           <Stack.Screen
-            name="secondRoundScreen"
-            component={secondRoundScreen}
+            name="SecondRoundScreen"
+            component={SecondRoundScreen}
           />
           <Stack.Screen
-            name="secondRoundScreen2"
-            component={secondRoundScreen2}
+            name="SecondRoundScreen2"
+            component={SecondRoundScreen2}
           />
           <Stack.Screen
-            name="secondRoundScreen3"
-            component={secondRoundScreen3}
+            name="SecondRoundScreen3"
+            component={SecondRoundScreen3}
           />
-          <Stack.Screen name="thirdRoundScreen" component={thirdRoundScreen} />
+          <Stack.Screen name="ThirdRoundScreen" component={ThirdRoundScreen} />
           <Stack.Screen
-            name="thirdRoundScreen2"
-            component={thirdRoundScreen2}
+            name="ThirdRoundScreen2"
+            component={ThirdRoundScreen2}
           />
           <Stack.Screen
             name="ReactionGameScreen"
@@ -105,6 +108,9 @@ export default function App() {
             name="ReactionLeaderboard"
             component={ReactionLeaderboard}
           />
+          <Stack.Screen name="MusicElimination" component={MusicElimination} />
+          <Stack.Screen name="SimpleChallenges" component={SimpleChallenges} />
+          <Stack.Screen name="CaptionGame" component={CaptionGame} />
         </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>

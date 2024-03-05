@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-function thirdRoundScreen2({ route, navigation }) {
+function ThirdRoundScreen2({ route, navigation }) {
   const { players } = route.params;
   const thirdPlayerName = players[2] ? players[2] : players[0];
 
@@ -12,8 +12,7 @@ function thirdRoundScreen2({ route, navigation }) {
       <LinearGradient colors={["#003601", "#FA922F"]} style={styles.container}>
         <Text style={styles.header}>Game of reactions</Text>
         <Text style={styles.text}>
-          OK {thirdPlayerName}, time for you to test your reactions! 🕺 Choose
-          your opponent, Press 'Start' when you are both ready🚀
+          OK {thirdPlayerName}, time for you to test your reactions! 🕺
         </Text>
         <TouchableOpacity
           style={styles.button}
@@ -82,4 +81,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default thirdRoundScreen2;
+export default ThirdRoundScreen2;

@@ -17,6 +17,7 @@ function ReactionGameScreen({ route, navigation }) {
       console.log("RESULTS", reactionTimes);
       navigation.navigate("ReactionResultsScreen", {
         reactionTimes: reactionTimes,
+        players: players,
       });
     }
   }, [reactionTimes, players.length, navigation]);
