@@ -19,7 +19,11 @@ import ReactionResultsScreen from "./screens/gameScreens/ReactionResultsScreen";
 import ReactionLeaderboard from "./screens/gameScreens/ReactionLeaderboard";
 import MusicElimination from "./screens/gameScreens/MusicElimination";
 import SimpleChallenges from "./screens/gameScreens/SimpleChallenges";
-import CaptionGame from "./screens/gameScreens/CaptionGame";
+import ChooseCaptionGif from "./screens/gameScreens/CaptionGame/ChooseCaptionGif";
+import SubmitCaptionScreen from "./screens/gameScreens/CaptionGame/SubmitCaptionScreen";
+import CaptionGameIntro from "./screens/gameScreens/CaptionGame/CaptionGameIntro";
+import CaptionVoteScreen from "./screens/gameScreens/CaptionGame/CaptionVoteScreen";
+import CaptionLeaderboardScreen from "./screens/gameScreens/CaptionGame/CaptionLeaderBoardScreen";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -110,7 +114,21 @@ export default function App() {
           />
           <Stack.Screen name="MusicElimination" component={MusicElimination} />
           <Stack.Screen name="SimpleChallenges" component={SimpleChallenges} />
-          <Stack.Screen name="CaptionGame" component={CaptionGame} />
+          <Stack.Screen name="CaptionGameIntro" component={CaptionGameIntro} />
+
+          <Stack.Screen name="ChooseCaptionGif" component={ChooseCaptionGif} />
+          <Stack.Screen
+            name="SubmitCaptionScreen"
+            component={SubmitCaptionScreen}
+          />
+          <Stack.Screen
+            name="CaptionVoteScreen"
+            component={CaptionVoteScreen}
+          />
+          <Stack.Screen
+            name="CaptionLeaderboardScreen"
+            component={CaptionLeaderboardScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>

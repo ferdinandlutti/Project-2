@@ -1,21 +1,29 @@
-// FirstRoundScreen.js
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Alert } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import TypingAnimation from "../assets/TypingAnimation";
 
-function FirstRoundScreen({ route, navigation }) {
+export default function CaptionGameIntro({ navigation, route }) {
   const { players } = route.params;
-
-  const firstPlayerName = players[0];
 
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#FFC692", "#FA922F"]} style={styles.container}>
-        <Text style={styles.header}>Pass the phone to {firstPlayerName}</Text>
+        <TypingAnimation
+          text="Time for The Caption Game!🍹🙌"
+          textStyle={styles.header}
+        />
+        <TypingAnimation
+          text="Choose the perfect GIF! Every player adds a caption to this GIF. Afterwards every player votes for their favorite."
+          textStyle={styles.text}
+          typingSpeed={50} // Optional: Adjust the typing speed as needed
+        />
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("ReactionGameScreen", {
+            navigation.navigate("ChooseCaptionGif", {
               players: players,
             });
           }}
@@ -34,6 +42,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
   },
+
   header: {
     fontSize: 50,
     fontFamily: "Papyrus-Condensed",
@@ -41,6 +50,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
+
   button: {
     backgroundColor: "#FFFFFF",
     width: "60%",
@@ -60,6 +70,13 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 50,
   },
+  text: {
+    fontSize: 30,
+    fontFamily: "Noteworthy-Light",
+    color: "#FFFFFF",
+    textAlign: "center",
+    margin: 20,
+  },
   buttonText: {
     color: "#FA922F",
     fontSize: 22,
@@ -70,5 +87,3 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
-
-export default FirstRoundScreen;
