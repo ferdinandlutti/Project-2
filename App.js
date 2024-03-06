@@ -24,6 +24,8 @@ import SubmitCaptionScreen from "./screens/gameScreens/CaptionGame/SubmitCaption
 import CaptionGameIntro from "./screens/gameScreens/CaptionGame/CaptionGameIntro";
 import CaptionVoteScreen from "./screens/gameScreens/CaptionGame/CaptionVoteScreen";
 import CaptionLeaderboardScreen from "./screens/gameScreens/CaptionGame/CaptionLeaderBoardScreen";
+import HeadToHeadIntro from "./screens/gameScreens/ReactionH2H/HeadToHeadIntro";
+import HeadToHeadChoose from "./screens/gameScreens/ReactionH2H/HeadToHeadChoose";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -129,6 +131,8 @@ export default function App() {
             name="CaptionLeaderboardScreen"
             component={CaptionLeaderboardScreen}
           />
+          <Stack.Screen name="HeadToHeadIntro" component={HeadToHeadIntro} />
+          <Stack.Screen name="HeadToHeadChoose" component={HeadToHeadChoose} />
         </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>

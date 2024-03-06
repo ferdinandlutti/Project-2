@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
 
 function ReactionGameScreen({ route, navigation }) {
   const { players } = route.params;
-  const [screenColor, setScreenColor] = useState("#003601");
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [startTime, setStartTime] = useState(0);
-  const [gameStarted, setGameStarted] = useState(false);
-  const [showCountdown, setShowCountdown] = useState(false);
-  const [countdown, setCountdown] = useState(3);
   const [reactionTimes, setReactionTimes] = useState([]);
+  const [gameState, setGameState] = useState("waiting"); // 'waiting', 'countdown', 'ready', 'started'
+
+  const [randomDelay, setRandomDelay] = useState(
+    Math.random() * (5000 - 1000) + 1000
+  ); // Random delay between 1 and 5 seconds
 
   useEffect(() => {
     if (reactionTimes.length === players.length) {
@@ -23,66 +25,57 @@ function ReactionGameScreen({ route, navigation }) {
   }, [reactionTimes, players.length, navigation]);
 
   const startGameForCurrentPlayer = () => {
-    setShowCountdown(true);
-    setCountdown(3);
-    let currentCountdown = 3;
-
-    const countdownTimer = setInterval(() => {
-      currentCountdown -= 1;
-      setCountdown(currentCountdown);
-
-      if (currentCountdown <= 0) {
-        clearInterval(countdownTimer);
-        setShowCountdown(false);
-        setGameStarted(true);
-        setTimeout(() => {
-          setScreenColor("#FA922F");
-          setStartTime(Date.now());
-        }, 1000);
-      }
-    }, 1000);
+    setGameState("countdown");
+    // No need to set countdown here as the CountdownCircleTimer component handles it
   };
 
   const handleScreenPress = () => {
-    if (screenColor === "#FA922F" && gameStarted) {
+    if (gameState === "red") {
       const reactionTime = Date.now() - startTime;
-      const nextPlayerIndex =
-        currentPlayerIndex + 1 < players.length ? currentPlayerIndex + 1 : 0;
-      const nextPlayerName = players[nextPlayerIndex];
-      console.log("CURRENT ON PRESS", players[currentPlayerIndex]);
+      setGameState("waiting");
       setReactionTimes((prevTimes) => [
         ...prevTimes,
         { name: players[currentPlayerIndex], time: reactionTime },
       ]);
-
       Alert.alert(
-        `Reaction Time`,
-        `${players[currentPlayerIndex]} reacted in ${reactionTime} ms. Pass the phone to ${nextPlayerName}.`,
-        [{ text: "OK", onPress: () => nextPlayer() }]
+        "Reaction Time",
+        `${players[currentPlayerIndex]} reacted in ${reactionTime} ms. Pass the phone to the next player.`,
+        [{ text: "OK", onPress: nextPlayer }]
       );
     }
   };
-  const nextPlayer = () => {
-    console.log("HERREEEEEEE", reactionTimes);
-    const isLastPlayer = currentPlayerIndex >= players.length - 1;
 
-    if (!isLastPlayer) {
-      setCurrentPlayerIndex(currentPlayerIndex + 1);
-      // Reset game state for the next player
-      setScreenColor("#003601");
-      setGameStarted(false);
-      setShowCountdown(false);
-      setCountdown(3);
+  const nextPlayer = () => {
+    const nextPlayerIndex = currentPlayerIndex + 1;
+    if (nextPlayerIndex < players.length) {
+      setCurrentPlayerIndex(nextPlayerIndex);
+      setRandomDelay(Math.random() * (5000 - 1000) + 1000); // Set a new random delay for the next player
     }
   };
 
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#003601", "#FA922F"]} style={styles.container}>
-        {showCountdown && (
-          <Text style={styles.countdown}>{countdown > 0 ? countdown : ""}</Text>
+        {gameState === "countdown" && (
+          <CountdownCircleTimer
+            isPlaying
+            duration={3}
+            colors={["#004777"]}
+            onComplete={() => {
+              setGameState("green");
+              setTimeout(() => {
+                setGameState("red");
+                setStartTime(Date.now());
+              }, randomDelay); // Start game after a random delay
+              return [false, 0]; // Don't repeat the timer
+            }}
+          >
+            {({ remainingTime }) => (
+              <Text style={styles.timerText}>Be ready in {remainingTime}</Text>
+            )}
+          </CountdownCircleTimer>
         )}
-        {!gameStarted && (
+        {gameState === "waiting" && (
           <>
             <Text style={styles.playerTurn}>
               {players[currentPlayerIndex]}'s turn
@@ -90,32 +83,25 @@ function ReactionGameScreen({ route, navigation }) {
             <TouchableOpacity
               style={styles.startButton}
               onPress={startGameForCurrentPlayer}
-              activeOpacity={0.7}
             >
-              <LinearGradient
-                // Gradient colors array
-                colors={["red", "#3b5998", "orange"]}
-                style={styles.startButtonGradient}
-              >
-                <Text style={styles.startButtonText}>START</Text>
-              </LinearGradient>
+              <Text style={styles.startButtonText}>START</Text>
             </TouchableOpacity>
           </>
         )}
-        {gameStarted && (
+        {(gameState === "green" || gameState === "red") && (
           <TouchableOpacity
-            style={[styles.container, { backgroundColor: screenColor }]}
+            style={[
+              styles.gameArea,
+              { backgroundColor: gameState === "red" ? "#FA922F" : "#003601" },
+            ]}
             onPress={handleScreenPress}
             activeOpacity={1}
           >
-            <Text style={styles.header}>
-              Tap as soon as the screen turns red!
-            </Text>
-            <Text style={styles.playerName}>{players[currentPlayerIndex]}</Text>
+            {gameState === "green" && (
+              <Text style={styles.header}>Get Ready!</Text>
+            )}
+            {gameState === "red" && <Text style={styles.header}>Tap Now!</Text>}
           </TouchableOpacity>
-        )}
-        {showCountdown && (
-          <Text style={styles.countdown}>{countdown > 0 ? countdown : ""}</Text>
         )}
       </LinearGradient>
     </View>
@@ -139,6 +125,13 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: "white",
     textAlign: "center",
+  },
+  gameArea: {
+    flex: 1,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "red",
   },
   playerTurn: {
     fontSize: 40,

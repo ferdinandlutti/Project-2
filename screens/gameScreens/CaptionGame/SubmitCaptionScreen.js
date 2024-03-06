@@ -81,11 +81,17 @@ export default function SubmitCaptionScreen({ navigation, route }) {
           duration={60}
           colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
           onComplete={handleTimeUp}
+          size={90}
         >
           {({ remainingTime }) => <Text>{remainingTime}</Text>}
         </CountdownCircleTimer>
         <Image source={{ uri: gifUrl }} style={styles.gif} />
-        <Text style={styles.instructions}>
+        {inputCaption.length > 0 && (
+          <View style={styles.captionBox}>
+            <Text style={styles.captionText}>“{inputCaption}”</Text>
+          </View>
+        )}
+        <Text style={styles.text}>
           Player {players[currentPlayerIndex]}, add your caption:
         </Text>
         <TextInput
@@ -120,22 +126,42 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
+    height: 70,
+    margin: 12,
     borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 5,
     padding: 10,
-    marginBottom: 20,
+    color: "#fff",
+    borderColor: "#fff",
+    borderRadius: 20,
     width: "100%",
+    fontSize: 20,
+    textAlign: "center",
   },
   button: {
-    backgroundColor: "#FA922F",
-    padding: 10,
-    borderRadius: 5,
-    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    width: "60%",
+    height: 60,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    shadowColor: "#000",
+    justifyContent: "center",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   buttonText: {
-    color: "#FFFFFF",
-    fontSize: 20,
+    color: "#FA922F",
+    fontSize: 22,
+    fontFamily: "Noteworthy-Light",
+    fontWeight: "bold",
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
   },
   text: {
     fontSize: 30,
@@ -143,5 +169,18 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     textAlign: "center",
     margin: 20,
+  },
+  captionBox: {
+    backgroundColor: "#f0f0f0",
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  captionText: {
+    color: "#333",
+    fontSize: 16,
+  },
+  timerText: {
+    fontSize: 18,
   },
 });

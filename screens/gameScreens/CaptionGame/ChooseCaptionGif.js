@@ -15,7 +15,7 @@ export default function ChooseCaptionGif({ route, navigation }) {
     "yuck",
     "party",
     "stressed",
-    "animals",
+    "clumsy",
     "stoned",
     "dancing",
     "scared",
@@ -28,6 +28,8 @@ export default function ChooseCaptionGif({ route, navigation }) {
     "sexy time",
     "drunk",
     "weird",
+    "instant regret",
+    "smash",
   ];
 
   const fetchRandomGif = async () => {
@@ -80,7 +82,7 @@ export default function ChooseCaptionGif({ route, navigation }) {
       <LinearGradient colors={["#D68E8D", "#FA922F"]} style={styles.container}>
         <Text style={styles.header}>Caption Game</Text>
         <Text style={styles.text}>
-          Everyone should agree on a GIF before continuing
+          Everyone should agree on the chosen GIF before continuing
         </Text>
 
         {currentGif ? (

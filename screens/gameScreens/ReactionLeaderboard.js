@@ -33,7 +33,7 @@ const ReactionLeaderboard = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("CaptionGameIntro", {
+              navigation.navigate("HeadToHeadIntro", {
                 players: players,
               });
             }}
