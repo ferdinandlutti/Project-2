@@ -8,6 +8,7 @@ import {
   ScrollView,
   Modal,
 } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function CaptionVoteScreen({ navigation, route }) {
   const { gifUrl, players, captions } = route.params;
@@ -17,9 +18,7 @@ export default function CaptionVoteScreen({ navigation, route }) {
 
   const handleVote = (captionIndex) => {
     setVotes((currentVotes) => {
-      // Copy the current votes to a new array to avoid mutating the state directly
       const updatedVotes = [...currentVotes];
-      // Increment the vote for the selected caption
       updatedVotes[captionIndex]++;
 
       return updatedVotes;
@@ -45,49 +44,51 @@ export default function CaptionVoteScreen({ navigation, route }) {
   }, [currentVoterIndex, players.length, captions, votes, navigation]);
   return (
     <View style={styles.container}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={showModal}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setShowModal(!showModal);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>All players have voted!</Text>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => {
-                setShowModal(!showModal);
-                navigation.navigate("CaptionLeaderboardScreen", {
-                  players,
-                  captions,
-                  votes,
-                });
-              }}
-            >
-              <Text style={styles.textStyle}>See the leaderboard</Text>
-            </TouchableOpacity>
+      <LinearGradient colors={["orange", "#FFFFFF"]} style={styles.container}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={showModal}
+          onRequestClose={() => {
+            Alert.alert("Modal has been closed.");
+            setShowModal(!showModal);
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>All players have voted!</Text>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {
+                  setShowModal(!showModal);
+                  navigation.navigate("CaptionLeaderboardScreen", {
+                    players,
+                    captions,
+                    votes,
+                  });
+                }}
+              >
+                <Text style={styles.textStyle}>See the leaderboard</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </Modal>
-      <Image source={{ uri: gifUrl }} style={styles.gif} />
-      <Text style={styles.instruction}>
-        {players[currentVoterIndex]}'s turn to vote:
-      </Text>
-      <ScrollView contentContainerStyle={styles.captionsContainer}>
-        {captions.map((caption, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.captionBox}
-            onPress={() => handleVote(index)}
-          >
-            <Text style={styles.captionText}>“{caption.text}”</Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+        </Modal>
+        <Image source={{ uri: gifUrl }} style={styles.gif} />
+        <Text style={styles.instruction}>
+          {players[currentVoterIndex]}'s turn to vote:
+        </Text>
+        <ScrollView contentContainerStyle={styles.captionsContainer}>
+          {captions.map((caption, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.captionBox}
+              onPress={() => handleVote(index)}
+            >
+              <Text style={styles.captionText}>“{caption.text}”</Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      </LinearGradient>
     </View>
   );
 }
@@ -98,15 +99,21 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingTop: 20,
+    width: "100%",
+    height: "100%",
   },
   gif: {
     width: 300,
     height: 200,
     resizeMode: "contain",
+    marginBottom: 20,
+    marginTop: 30,
   },
   instruction: {
-    fontSize: 18,
-    margin: 20,
+    fontSize: 30,
+    marginBottom: 20,
+    fontFamily: "Noteworthy-Light",
+    color: "#333333",
     textAlign: "center",
   },
   captionsContainer: {
@@ -154,14 +161,20 @@ const styles = StyleSheet.create({
   },
   buttonClose: {
     backgroundColor: "#2196F3",
+    padding: 10,
+    borderRadius: 10,
   },
   textStyle: {
     color: "white",
     fontWeight: "bold",
     textAlign: "center",
+    fontFamily: "Noteworthy-Light",
+    fontSize: 20,
   },
   modalText: {
     marginBottom: 15,
     textAlign: "center",
+    fontSize: 30,
+    fontFamily: "Noteworthy-Light",
   },
 });

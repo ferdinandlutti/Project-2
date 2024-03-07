@@ -22,34 +22,41 @@ export default function SubmitCaptionScreen({ navigation, route }) {
     captions = [],
   } = route.params;
   const [inputCaption, setInputCaption] = useState("");
-  const [timerKey, setTimerKey] = useState(0); // Key to reset the timer
+  const [timerKey, setTimerKey] = useState(0);
+  const [showVoteModal, setShowVoteModal] = useState(false);
 
   const handleCaptionSubmit = () => {
-    const updatedCaptions = [
-      ...captions,
-      {
-        text: inputCaption,
-        playerIndex: currentPlayerIndex,
-        votes: 0,
-      },
-    ];
-    setTimerKey((prevKey) => prevKey + 1);
+    const newCaption = {
+      text: inputCaption,
+      playerIndex: currentPlayerIndex,
+      votes: 0,
+    };
+    // Immediately construct the updated captions array
+    const updatedCaptions = [...captions, newCaption];
 
     if (currentPlayerIndex < players.length - 1) {
+      // Not the last player, proceed as normal
       navigation.replace("SubmitCaptionScreen", {
-        // Ensure this matches your screen name accurately
         gifUrl,
         players,
         currentPlayerIndex: currentPlayerIndex + 1,
         captions: updatedCaptions,
       });
     } else {
-      navigation.navigate("CaptionVoteScreen", {
-        gifUrl,
-        players,
-        captions: updatedCaptions,
-      });
+      // Last player, prepare to show the modal, but first ensure captions are updated
+      setShowVoteModal(true);
+      // Directly work with the updated captions array
+      navigateToVoteScreen(updatedCaptions); // Pass the updatedCaptions directly
     }
+  };
+  const navigateToVoteScreen = (updatedCaptions) => {
+    setShowVoteModal(false); // Close the modal before navigating
+    // Use the updated captions array directly to ensure it includes the last caption
+    navigation.navigate("CaptionVoteScreen", {
+      gifUrl,
+      players,
+      captions: updatedCaptions,
+    });
   };
   const handleTimeUp = () => {
     const nextPlayerIndex = currentPlayerIndex + 1;
@@ -60,7 +67,6 @@ export default function SubmitCaptionScreen({ navigation, route }) {
         [{ text: "OK", onPress: () => setTimerKey((prevKey) => prevKey + 1) }]
       );
     } else {
-      // If it was the last player, navigate to the next screen
       navigation.navigate("CaptionVoteScreen", {
         gifUrl,
         players,
@@ -68,7 +74,7 @@ export default function SubmitCaptionScreen({ navigation, route }) {
       });
     }
   };
-
+  console.log(captions);
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -104,6 +110,30 @@ export default function SubmitCaptionScreen({ navigation, route }) {
         <TouchableOpacity style={styles.button} onPress={handleCaptionSubmit}>
           <Text style={styles.buttonText}>Submit</Text>
         </TouchableOpacity>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={showVoteModal}
+          onRequestClose={() => setShowVoteModal(false)}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>
+                Ok, all players have submitted. Now we vote for our favorite.
+                Pass the phone to {players[0]}
+              </Text>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => {
+                  setInputCaption("");
+                  navigateToVoteScreen();
+                }}
+              >
+                <Text style={styles.textStyle}>Start Voting</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
       </LinearGradient>
     </KeyboardAvoidingView>
   );
@@ -182,5 +212,41 @@ const styles = StyleSheet.create({
   },
   timerText: {
     fontSize: 18,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontFamily: "Noteworthy-Light",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize: 20,
+    fontFamily: "Noteworthy-Light",
   },
 });
