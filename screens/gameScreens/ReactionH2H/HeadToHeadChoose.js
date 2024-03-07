@@ -15,7 +15,7 @@ function HeadToHeadChoose({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={["#003601", "#FA922F"]} style={styles.container}>
+      <LinearGradient colors={["#B1743F", "#DB7C29"]} style={styles.container}>
         <Text style={styles.header}>Head To Head Battle</Text>
         {contestants.length > 0 && (
           <>
@@ -39,7 +39,7 @@ function HeadToHeadChoose({ route, navigation }) {
           <TouchableOpacity
             style={[styles.button, styles.startBattleButton]}
             onPress={() => {
-              navigation.navigate("HeadToHeadGame", {
+              navigation.navigate("HeadToHeadBattleScreen", {
                 contestants: contestants,
               });
             }}
