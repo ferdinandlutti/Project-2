@@ -7,20 +7,30 @@ function HeadToHeadBattleScreen({ route, navigation }) {
   const [buttonColor, setButtonColor] = useState("grey"); // Start with neutral color
   const [gameState, setGameState] = useState("waiting"); // 'waiting', 'running', 'ended'
 
-  // Randomly show RED or GREEN button at random times
   useEffect(() => {
     let timerId;
     if (gameState === "running") {
-      timerId = setTimeout(() => {
-        // Randomly choose between RED and GREEN
-        setButtonColor(Math.random() < 0.5 ? "red" : "green");
-      }, Math.random() * 2000 + 1000); // Random delay between 1 and 3 seconds
+      const randomizeButtonAppearance = () => {
+        timerId = setTimeout(() => {
+          const isRed = Math.random() < 0.5;
+          setButtonColor(isRed ? "red" : "green");
+
+          if (isRed) {
+            setTimeout(() => {
+              setButtonColor("grey"); // Reset to neutral color
+              randomizeButtonAppearance(); // Restart the random color generator
+            }, 1000); // Adjust delay for red button disappearance as needed
+          }
+        }, Math.random() * 2000 + 1000); // Random delay between 1 and 3 seconds for the button to appear
+      };
+
+      randomizeButtonAppearance();
     }
     return () => clearTimeout(timerId);
   }, [gameState]);
 
   const handlePress = (playerIndex) => {
-    if (gameState !== "running") return; // Ignore if game hasn't started or has ended
+    if (gameState !== "running") return;
 
     if (buttonColor === "red") {
       Alert.alert("Oops!", `${contestants[playerIndex]} loses!`);
