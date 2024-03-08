@@ -88,10 +88,9 @@ const styles = StyleSheet.create({
   gif: {
     width: "100%",
     height: 250,
-    bottom: 100,
   },
   header: {
-    fontSize: 50,
+    fontSize: 40,
     fontFamily: "Papyrus-Condensed",
     color: "#FFFFFF",
     fontWeight: "bold",

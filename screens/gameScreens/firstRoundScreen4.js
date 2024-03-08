@@ -6,8 +6,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Alert,
-  Image,
+  ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -53,15 +52,20 @@ function FirstRoundScreen4({ route, navigation }) {
         </Modal>
         <View style={styles.listContainer}>
           <Text style={styles.text}>Who Lost?</Text>
-          {players.map((player, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.playerButton}
-              onPress={() => handlePlayerSelect(player)}
-            >
-              <Text style={styles.playerButtonText}>{player}</Text>
-            </TouchableOpacity>
-          ))}
+          <ScrollView
+            style={{ width: "100%" }}
+            contentContainerStyle={styles.scrollViewContent} // Apply styles to the content of the ScrollView
+          >
+            {players.map((player, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.playerButton}
+                onPress={() => handlePlayerSelect(player)}
+              >
+                <Text style={styles.playerButtonText}>{player}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
         </View>
         <TouchableOpacity
           style={styles.button}
@@ -91,10 +95,17 @@ const styles = StyleSheet.create({
     padding: 20,
     alignItems: "center",
     justifyContent: "center",
-    width: "80%",
     height: 450,
     marginTop: 20,
     marginBottom: 20,
+    // Make sure the container is properly styled to hold the ScrollView
+    width: "100%", // Make sure it takes the full width
+  },
+  scrollViewContent: {
+    // Center the content of the ScrollView
+    alignItems: "center", // Center items horizontally in the container
+    justifyContent: "flex-start", // Align items to the start of the container
+    flexGrow: 1, // Ensure that the container can grow if needed
   },
   header: {
     fontSize: 50,

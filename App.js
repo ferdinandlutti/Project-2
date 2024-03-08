@@ -2,11 +2,9 @@ import Home from "./screens/Home";
 import Register from "./screens/Register";
 import RegisterPlayer from "./screens/RegisterPlayer";
 import GameScreen from "./screens/GameScreen";
-import FirstRoundScreen from "./screens/gameScreens/FirstRoundScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { DataProvider } from "./context/DataContext";
-import FirstRoundScreen2 from "./screens/gameScreens/FirstRoundScreen2";
 import FirstRoundScreen3 from "./screens/gameScreens/FirstRoundScreen3";
 import FirstRoundScreen4 from "./screens/gameScreens/FirstRoundScreen4";
 import ThirdRoundScreen from "./screens/gameScreens/ThirdRoundScreen";
@@ -72,11 +70,7 @@ export default function App() {
               headerTintColor: "black",
             }}
           />
-          <Stack.Screen name="FirstRoundScreen" component={FirstRoundScreen} />
-          <Stack.Screen
-            name="FirstRoundScreen2"
-            component={FirstRoundScreen2}
-          />
+
           <Stack.Screen
             name="FirstRoundScreen3"
             component={FirstRoundScreen3}

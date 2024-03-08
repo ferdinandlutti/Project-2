@@ -11,7 +11,6 @@ export const DataProvider = ({ children }) => {
 
   useEffect(() => {
     // fetchData()
-    // We can also fetch the data in the provider (then ideally set a state here also). Then we can send fetched state across our provider screens consumers
   }, []);
 
   return (
