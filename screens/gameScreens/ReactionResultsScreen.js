@@ -44,7 +44,7 @@ const ReactionResultsScreen = ({ route, navigation }) => {
               });
             }}
           >
-            <Text style={styles.buttonText}>Next Round</Text>
+            <Text style={styles.buttonText}>See The Leaderboard</Text>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#FA922F",
-    fontSize: 22,
+    fontSize: 18,
     fontFamily: "Noteworthy-Light",
     fontWeight: "bold",
     textAlign: "center",

@@ -40,6 +40,16 @@ const ReactionLeaderboard = ({ route, navigation }) => {
           >
             <Text style={styles.buttonText}>Next Round</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.playAgainButton} // Create a new style for this if you want different styling than the next round button
+            onPress={() => {
+              navigation.navigate("ReactionGameIntro", {
+                players: players,
+              }); // Make sure "ReactionGameIntro" is the correct name of your route
+            }}
+          >
+            <Text style={styles.playAgainButtonText}>Play Again!</Text>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     </LinearGradient>
@@ -60,6 +70,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
     fontFamily: "Papyrus-Condensed",
+    color: "white",
   },
   resultRow: {
     flexDirection: "row",
@@ -70,14 +81,17 @@ const styles = StyleSheet.create({
   playerRank: {
     fontWeight: "bold",
     fontSize: 18,
+    color: "white",
     fontFamily: "Noteworthy-Light",
   },
   playerName: {
     fontSize: 18,
+    color: "white",
     fontFamily: "Noteworthy-Light",
   },
   playerTime: {
     fontSize: 18,
+    color: "white",
     fontFamily: "Noteworthy-Light",
   },
   button: {
@@ -96,6 +110,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 3.84,
     elevation: 5,
+    alignSelf: "center",
+    position: "absolute", // Position the button absolutely relative to its parent container
+    top: 600, // Adjust this value as needed to position the button at the desired distance from the bottom
   },
   buttonText: {
     color: "#FA922F",
@@ -110,6 +127,34 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 250,
     bottom: 100,
+  },
+  playAgainButton: {
+    backgroundColor: "#FFFFFF", // Example blue background
+    width: "60%",
+    height: 60,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    shadowColor: "#000",
+    justifyContent: "center",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+    alignSelf: "center",
+    marginTop: 20, // Add space between this and the next round button
+    top: 80,
+  },
+
+  playAgainButtonText: {
+    color: "#FA922F",
+    fontSize: 22,
+    fontFamily: "Noteworthy-Light",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

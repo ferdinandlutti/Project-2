@@ -92,7 +92,7 @@ function ReactionGameScreen({ route, navigation }) {
           <TouchableOpacity
             style={[
               styles.gameArea,
-              { backgroundColor: gameState === "red" ? "#FA922F" : "#003601" },
+              { backgroundColor: gameState === "red" ? "red" : "#003601" },
             ]}
             onPress={handleScreenPress}
             activeOpacity={1}
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
     fontFamily: "Noteworthy-Light",
     fontWeight: "bold",
     textAlign: "center",
+    top: "40%",
   },
 });
 

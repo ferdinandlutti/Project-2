@@ -1,19 +1,44 @@
 // FirstRoundScreen.js
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import TypingAnimation from "./assets/TypingAnimation";
+import { Audio } from "expo-av";
 
-function ThirdRoundScreen2({ route, navigation }) {
+function ReactionGameIntro({ route, navigation }) {
   const { players } = route.params;
-  const thirdPlayerName = players[2] ? players[2] : players[0];
+  const [sound, setSound] = useState();
 
+  async function loadAndPlaySound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require("./assets/whistle-sound.mp3")
+    );
+    setSound(sound);
+
+    await sound.playAsync();
+  }
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#003601", "#FA922F"]} style={styles.container}>
-        <Text style={styles.header}>Game of reactions</Text>
-        <Text style={styles.text}>
-          OK {thirdPlayerName}, time for you to test your reactions! 🕺
-        </Text>
+        <TouchableOpacity onPress={loadAndPlaySound} style={styles.soundButton}>
+          <Text style={styles.whistleText}>📣</Text>
+        </TouchableOpacity>
+        <TypingAnimation text="Game of reactions" textStyle={styles.header} />
+        <TypingAnimation
+          text="OK, time for you to test your reactions!🫵 Press the screen as soon as
+          it turns RED. if you press BEFORE it turns red you will lose.... Don't
+          cry about it😥"
+          textStyle={styles.text}
+          typingSpeed={50} // Optional: Adjust the typing speed as needed
+        />
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -42,7 +67,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontWeight: "bold",
     textAlign: "center",
-    bottom: 100,
+    bottom: 60,
   },
   button: {
     backgroundColor: "#FFFFFF",
@@ -79,6 +104,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  whistleText: {
+    color: "white",
+    fontSize: 22,
+    fontFamily: "Noteworthy-Light",
+  },
+  soundButton: {
+    position: "absolute",
+    left: 20,
+    top: 70,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
 });
 
-export default ThirdRoundScreen2;
+export default ReactionGameIntro;

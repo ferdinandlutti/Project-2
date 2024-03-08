@@ -13,7 +13,7 @@ import SecondRoundScreen from "./screens/gameScreens/SecondRoundScreen";
 import SecondRoundScreen2 from "./screens/gameScreens/SecondRoundScreen2";
 import SecondRoundScreen3 from "./screens/gameScreens/SecondRoundScreen3";
 import ThirdRoundScreen from "./screens/gameScreens/ThirdRoundScreen";
-import ThirdRoundScreen2 from "./screens/gameScreens/ThirdRoundScreen2";
+import ThirdRoundScreen2 from "./screens/gameScreens/ReactionGameIntro";
 import ReactionGameScreen from "./screens/gameScreens/ReactionGameScreen";
 import ReactionResultsScreen from "./screens/gameScreens/ReactionResultsScreen";
 import ReactionLeaderboard from "./screens/gameScreens/ReactionLeaderboard";
@@ -27,6 +27,7 @@ import CaptionLeaderboardScreen from "./screens/gameScreens/CaptionGame/CaptionL
 import HeadToHeadIntro from "./screens/gameScreens/ReactionH2H/HeadToHeadIntro";
 import HeadToHeadChoose from "./screens/gameScreens/ReactionH2H/HeadToHeadChoose";
 import HeadToHeadBattleScreen from "./screens/gameScreens/ReactionH2H/HeadToHeadBattleScreen";
+import ReactionGameIntro from "./screens/gameScreens/ReactionGameIntro";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -100,8 +101,8 @@ export default function App() {
           />
           <Stack.Screen name="ThirdRoundScreen" component={ThirdRoundScreen} />
           <Stack.Screen
-            name="ThirdRoundScreen2"
-            component={ThirdRoundScreen2}
+            name="ReactionGameIntro"
+            component={ReactionGameIntro}
           />
           <Stack.Screen
             name="ReactionGameScreen"

@@ -1,79 +1,141 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  Alert,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 function HeadToHeadBattleScreen({ route, navigation }) {
-  const { contestants } = route.params;
-  const [buttonColor, setButtonColor] = useState("grey"); // Start with neutral color
-  const [gameState, setGameState] = useState("waiting"); // 'waiting', 'running', 'ended'
+  const { contestants, winners = [], losers = [] } = route.params;
+  const [gameState, setGameState] = useState("waiting");
+  const [points, setPoints] = useState([0, 0]);
+  const [buttonColor, setButtonColor] = useState("grey");
+  const [roundWinner, setRoundWinner] = useState(null);
+  const [showWinnerModal, setShowWinnerModal] = useState(false);
 
   useEffect(() => {
-    let timerId;
     if (gameState === "running") {
-      const randomizeButtonAppearance = () => {
-        timerId = setTimeout(() => {
-          const isRed = Math.random() < 0.5;
-          setButtonColor(isRed ? "red" : "green");
+      const timerId = setTimeout(() => {
+        const isRedButton = Math.random() < 0.5;
+        setButtonColor(isRedButton ? "red" : "green");
+        if (isRedButton) {
+          setTimeout(() => setButtonColor("grey"), 1000);
+        }
+      }, Math.random() * 2000 + 1000);
 
-          if (isRed) {
-            setTimeout(() => {
-              setButtonColor("grey"); // Reset to neutral color
-              randomizeButtonAppearance(); // Restart the random color generator
-            }, 1000); // Adjust delay for red button disappearance as needed
-          }
-        }, Math.random() * 2000 + 1000); // Random delay between 1 and 3 seconds for the button to appear
-      };
-
-      randomizeButtonAppearance();
+      return () => clearTimeout(timerId);
     }
-    return () => clearTimeout(timerId);
-  }, [gameState]);
+  }, [gameState, buttonColor]);
 
   const handlePress = (playerIndex) => {
     if (gameState !== "running") return;
 
     if (buttonColor === "red") {
-      Alert.alert("Oops!", `${contestants[playerIndex]} loses!`);
-      setGameState("ended");
+      // Directly setting points if needed. This example shows penalty logic.
+      const newPoints = [...points];
+      newPoints[playerIndex]--; // Assuming you want to penalize for a wrong press. Adjust according to your game rules.
+      setPoints(newPoints);
+      // Alert and pause logic
+      Alert.alert(
+        "-1 Point!",
+        `${contestants[playerIndex]} pressed too early!`,
+        [
+          { text: "OK", onPress: () => setGameState("running") }, // Resume game
+        ]
+      );
+      setButtonColor("grey"); // Ensure the button color is reset
+      setGameState("waiting"); // Pause the game
     } else if (buttonColor === "green") {
-      Alert.alert("Fast!", `${contestants[playerIndex]} wins!`);
-      setGameState("ended");
+      const newPoints = [...points];
+      newPoints[playerIndex]++;
+      setPoints(newPoints);
+
+      if (newPoints[playerIndex] === 3) {
+        setGameState("ended");
+        Alert.alert("Game Over", `${contestants[playerIndex]} wins the game!`, [
+          { text: "OK", onPress: () => setShowWinnerModal(true) }, // Navigate or handle winner
+        ]);
+      } else {
+        // Here we show the alert for scoring a point and pause the game until "OK" is pressed
+        Alert.alert("Point!", `${contestants[playerIndex]} scores a point!`, [
+          { text: "OK", onPress: () => setGameState("running") }, // Resume game
+        ]);
+        setButtonColor("grey"); // Reset the button color for the next round
+        setGameState("waiting"); // Pause the game until "OK" is pressed
+      }
     }
+  };
+
+  const resetRound = () => {
+    setButtonColor("grey");
+    setGameState("running");
   };
 
   const startGame = () => {
     setGameState("running");
-    setButtonColor("grey"); // Reset button color
+    setButtonColor("grey");
+  };
+
+  const handleWinnerAcknowledged = () => {
+    setShowWinnerModal(false);
+    // Navigate or reset game logic here based on your requirements
+    navigation.goBack(); // Example navigation, adjust based on your app's flow
   };
 
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#003601", "#FA922F"]} style={styles.container}>
-        <View style={styles.playerAreaTop}>
-          <Text style={styles.playerName}>{contestants[0]}'s Side</Text>
-        </View>
-        {gameState === "running" && (
-          <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: buttonColor }]}
-            onPress={() => handlePress(0)}
-            disabled={buttonColor === "grey"}
-          />
-        )}
+        <Text style={styles.playerNameTop}>
+          {contestants[0]}: {points[0]}
+        </Text>
+        <Text style={styles.playerNameBottom}>
+          {contestants[1]}: {points[1]}
+        </Text>
         {gameState === "waiting" && (
           <TouchableOpacity style={styles.startButton} onPress={startGame}>
             <Text style={styles.startButtonText}>Start</Text>
           </TouchableOpacity>
         )}
-        {gameState === "running" && (
-          <TouchableOpacity
-            style={[styles.actionButton, { backgroundColor: buttonColor }]}
-            onPress={() => handlePress(1)}
-            disabled={buttonColor === "grey"}
-          />
+        {gameState !== "waiting" && (
+          <>
+            <TouchableOpacity
+              style={[styles.actionButton, { backgroundColor: buttonColor }]}
+              onPress={() => handlePress(0)}
+              disabled={buttonColor === "grey" || gameState === "ended"}
+            />
+            <TouchableOpacity
+              style={[styles.actionButton, { backgroundColor: buttonColor }]}
+              onPress={() => handlePress(1)}
+              disabled={buttonColor === "grey" || gameState === "ended"}
+            />
+          </>
         )}
-        <View style={styles.playerAreaBottom}>
-          <Text style={styles.playerName}>{contestants[1]}'s Side</Text>
-        </View>
+        {showWinnerModal && (
+          <Modal
+            visible={showWinnerModal}
+            transparent={true}
+            animationType="slide"
+            onRequestClose={() => setShowWinnerModal(false)}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>
+                  {roundWinner} wins the game!
+                </Text>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={handleWinnerAcknowledged}
+                >
+                  <Text style={styles.textStyle}>Acknowledge</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+        )}
       </LinearGradient>
     </View>
   );
@@ -84,6 +146,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    width: "100%",
   },
   playerAreaTop: {
     flex: 1,
@@ -113,14 +176,60 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   startButton: {
-    backgroundColor: "grey",
+    backgroundColor: "white",
     padding: 20,
-    borderRadius: 10,
+    borderRadius: 20,
+    position: "absolute", // Position it over everything else
+    alignSelf: "center",
   },
   startButtonText: {
-    color: "white",
+    color: "black",
     fontSize: 20,
   },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 100, // Adjust the height as necessary
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    backgroundColor: "#2196F3",
+    padding: 10,
+    borderRadius: 10,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontFamily: "Noteworthy-Light",
+    fontSize: 20,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize: 30,
+    fontFamily: "Noteworthy-Light",
+  },
 });
-
 export default HeadToHeadBattleScreen;
