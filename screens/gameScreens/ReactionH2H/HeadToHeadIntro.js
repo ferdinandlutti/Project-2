@@ -1,27 +1,52 @@
 // FirstRoundScreen.js
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import TypingAnimation from "../assets/TypingAnimation";
+import { Audio } from "expo-av";
 
 function HeadToHeadIntro({ route, navigation }) {
   const { players } = route.params;
+  const [sound, setSound] = useState();
 
+  async function loadAndPlaySound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require("../assets/whistle-sound.mp3")
+    );
+    setSound(sound);
+
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#003601", "#FA922F"]} style={styles.container}>
+        <TouchableOpacity onPress={loadAndPlaySound} style={styles.soundButton}>
+          <Text style={styles.whistleText}>📣</Text>
+        </TouchableOpacity>
         <Text style={styles.header}>Head To Head</Text>
-        <Text style={styles.text}>
-          OK , Now it is time for some intense battles, with 1v1 action
-        </Text>
+        <TypingAnimation
+          text="OK , Now it is time for some intense 1v1 action"
+          textStyle={styles.text}
+          typingSpeed={50} // Optional: Adjust the typing speed as needed
+        />
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("HeadToHeadChoose", {
+            navigation.navigate("HeadToHeadRules", {
               players: players,
             });
           }}
         >
-          <Text style={styles.buttonText}>Start</Text>
+          <Text style={styles.buttonText}>Next</Text>
         </TouchableOpacity>
       </LinearGradient>
     </View>
@@ -77,6 +102,27 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignItems: "center",
     justifyContent: "center",
+  },
+  whistleText: {
+    color: "white",
+    fontSize: 22,
+    fontFamily: "Noteworthy-Light",
+  },
+  soundButton: {
+    position: "absolute",
+    left: 20,
+    top: 70,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 

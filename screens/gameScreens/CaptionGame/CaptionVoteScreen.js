@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   Modal,
+  SafeAreaView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -45,49 +46,51 @@ export default function CaptionVoteScreen({ navigation, route }) {
   return (
     <View style={styles.container}>
       <LinearGradient colors={["orange", "#FFFFFF"]} style={styles.container}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={showModal}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setShowModal(!showModal);
-          }}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Text style={styles.modalText}>All players have voted!</Text>
-              <TouchableOpacity
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setShowModal(!showModal);
-                  navigation.navigate("CaptionLeaderboardScreen", {
-                    players,
-                    captions,
-                    votes,
-                  });
-                }}
-              >
-                <Text style={styles.textStyle}>See the leaderboard</Text>
-              </TouchableOpacity>
+        <SafeAreaView style={styles.container}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={showModal}
+            onRequestClose={() => {
+              Alert.alert("Modal has been closed.");
+              setShowModal(!showModal);
+            }}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>All players have voted!</Text>
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => {
+                    setShowModal(!showModal);
+                    navigation.navigate("CaptionLeaderboardScreen", {
+                      players,
+                      captions,
+                      votes,
+                    });
+                  }}
+                >
+                  <Text style={styles.textStyle}>See the leaderboard</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </Modal>
-        <Image source={{ uri: gifUrl }} style={styles.gif} />
-        <Text style={styles.instruction}>
-          {players[currentVoterIndex]}'s turn to vote:
-        </Text>
-        <ScrollView contentContainerStyle={styles.captionsContainer}>
-          {captions.map((caption, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.captionBox}
-              onPress={() => handleVote(index)}
-            >
-              <Text style={styles.captionText}>“{caption.text}”</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
+          </Modal>
+          <Image source={{ uri: gifUrl }} style={styles.gif} />
+          <Text style={styles.instruction}>
+            {players[currentVoterIndex]}'s turn to vote:
+          </Text>
+          <ScrollView contentContainerStyle={styles.captionsContainer}>
+            {captions.map((caption, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.captionBox}
+                onPress={() => handleVote(index)}
+              >
+                <Text style={styles.captionText}>“{caption.text}”</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </SafeAreaView>
       </LinearGradient>
     </View>
   );

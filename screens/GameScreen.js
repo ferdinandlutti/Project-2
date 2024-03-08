@@ -1,22 +1,53 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Alert } from "react-native";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Alert,
+  ActivityIndicator,
+  Animated,
+} from "react-native";
 
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function GameScreen({ navigation, route }) {
   const { players } = route.params;
+  const [isLoading, setIsLoading] = useState(true);
+  const fadeAnim = useRef(new Animated.Value(0)).current; // Initial value for opacity: 0
+
+  useEffect(() => {
+    // Trigger the animation once the GIF is loaded
+    if (!isLoading) {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 1000, // Animation can be adjusted
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [isLoading]);
 
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#FFC692", "#FA922F"]} style={styles.container}>
         <Text style={styles.header}>Get those drinks ready!🍹🍻</Text>
-
-        <Image
+        {isLoading && (
+          <ActivityIndicator
+            size="large"
+            color="#FA922F"
+            style={{ height: 250 }}
+          />
+        )}
+        <Animated.Image
           source={require("../assets/images/MXw.gif")}
-          style={styles.gif}
+          style={[
+            styles.gif,
+            { opacity: fadeAnim }, // Bind opacity to animated value
+          ]}
           resizeMode="contain"
+          onLoad={() => setIsLoading(false)} // Set loading state to false once the image is loaded
         />
         {players.map((player, index) => (
           <View key={index} style={styles.playerContainer}>
@@ -28,7 +59,7 @@ export default function GameScreen({ navigation, route }) {
           style={styles.button}
           onPress={() => {
             if (players.length > 1) {
-              navigation.navigate("ReactionGameIntro", {
+              navigation.navigate("FirstRoundScreen3", {
                 // FirstRoundScreen
                 players: players,
               });

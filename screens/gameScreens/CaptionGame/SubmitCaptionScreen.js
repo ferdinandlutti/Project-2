@@ -24,6 +24,7 @@ export default function SubmitCaptionScreen({ navigation, route }) {
   const [inputCaption, setInputCaption] = useState("");
   const [timerKey, setTimerKey] = useState(0);
   const [showVoteModal, setShowVoteModal] = useState(false);
+  const [timerActive, setTimerActive] = useState(true);
 
   const handleCaptionSubmit = () => {
     const newCaption = {
@@ -33,6 +34,7 @@ export default function SubmitCaptionScreen({ navigation, route }) {
     };
     // Immediately construct the updated captions array
     const updatedCaptions = [...captions, newCaption];
+    setTimerActive(false);
 
     if (currentPlayerIndex < players.length - 1) {
       // Not the last player, proceed as normal
@@ -59,6 +61,7 @@ export default function SubmitCaptionScreen({ navigation, route }) {
     });
   };
   const handleTimeUp = () => {
+    if (!timerActive) return;
     const nextPlayerIndex = currentPlayerIndex + 1;
     if (nextPlayerIndex < players.length) {
       Alert.alert(

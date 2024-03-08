@@ -9,9 +9,6 @@ import { DataProvider } from "./context/DataContext";
 import FirstRoundScreen2 from "./screens/gameScreens/FirstRoundScreen2";
 import FirstRoundScreen3 from "./screens/gameScreens/FirstRoundScreen3";
 import FirstRoundScreen4 from "./screens/gameScreens/FirstRoundScreen4";
-import SecondRoundScreen from "./screens/gameScreens/SecondRoundScreen";
-import SecondRoundScreen2 from "./screens/gameScreens/SecondRoundScreen2";
-import SecondRoundScreen3 from "./screens/gameScreens/SecondRoundScreen3";
 import ThirdRoundScreen from "./screens/gameScreens/ThirdRoundScreen";
 import ThirdRoundScreen2 from "./screens/gameScreens/ReactionGameIntro";
 import ReactionGameScreen from "./screens/gameScreens/ReactionGameScreen";
@@ -28,6 +25,7 @@ import HeadToHeadIntro from "./screens/gameScreens/ReactionH2H/HeadToHeadIntro";
 import HeadToHeadChoose from "./screens/gameScreens/ReactionH2H/HeadToHeadChoose";
 import HeadToHeadBattleScreen from "./screens/gameScreens/ReactionH2H/HeadToHeadBattleScreen";
 import ReactionGameIntro from "./screens/gameScreens/ReactionGameIntro";
+import HeadToHeadRules from "./screens/gameScreens/ReactionH2H/HeadToHeadRules";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -87,18 +85,7 @@ export default function App() {
             name="FirstRoundScreen4"
             component={FirstRoundScreen4}
           />
-          <Stack.Screen
-            name="SecondRoundScreen"
-            component={SecondRoundScreen}
-          />
-          <Stack.Screen
-            name="SecondRoundScreen2"
-            component={SecondRoundScreen2}
-          />
-          <Stack.Screen
-            name="SecondRoundScreen3"
-            component={SecondRoundScreen3}
-          />
+
           <Stack.Screen name="ThirdRoundScreen" component={ThirdRoundScreen} />
           <Stack.Screen
             name="ReactionGameIntro"
@@ -139,6 +126,7 @@ export default function App() {
             name="HeadToHeadBattleScreen"
             component={HeadToHeadBattleScreen}
           />
+          <Stack.Screen name="HeadToHeadRules" component={HeadToHeadRules} />
         </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>

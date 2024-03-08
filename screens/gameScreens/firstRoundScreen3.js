@@ -1,69 +1,92 @@
 // FirstRoundScreen.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Swiper from "react-native-swiper";
+import PagerView from "react-native-pager-view";
+import { Audio } from "expo-av";
 
 function FirstRoundScreen3({ route, navigation }) {
   const { players } = route.params;
+  const [pageIndex, setPageIndex] = useState(0);
+  const [sound, setSound] = useState();
 
+  const renderDots = (totalPages, currentIndex) => {
+    let dots = [];
+    for (let i = 0; i < totalPages; i++) {
+      dots.push(
+        <View
+          key={i}
+          style={[
+            styles.dot,
+            currentIndex === i ? styles.activeDot : styles.inactiveDot,
+          ]}
+        />
+      );
+    }
+    return <View style={styles.dotContainer}>{dots}</View>;
+  };
+  async function loadAndPlaySound() {
+    const { sound } = await Audio.Sound.createAsync(
+      require("./assets/whistle-sound.mp3")
+    );
+    setSound(sound);
+
+    await sound.playAsync();
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#003601", "#FA922F"]} style={styles.container}>
-        <Text style={styles.header}>Game of remembering</Text>
-        <View style={styles.rulesContainer}>
-          <Text style={styles.rulesHeader}>Rules</Text>
-
-          <Swiper
-            style={styles.wrapper}
-            showsButtons
-            loop={false}
-            showsPagination={true}
-            paginationStyle={styles.paginationStyle}
-            dotStyle={styles.dotStyle}
-            activeDotStyle={styles.activeDotStyle}
-          >
-            <View style={styles.slide}>
-              <Text style={styles.text}>1 </Text>
-              <Text style={styles.text}>
-                You all add a word to a sentence in turns.
-              </Text>
-            </View>
-            <View style={styles.slide}>
-              <Text style={styles.text}>2 </Text>
-              <Text style={styles.text}>
-                Repeat the whole sentence, and add a word each turn.
-              </Text>
-            </View>
-            <View style={styles.slide}>
-              <Text style={styles.text}>3 </Text>
-              <Text style={styles.text}>
-                The first person unable to repeat the whole sentence drinks.
-              </Text>
-            </View>
-
-            <View style={styles.slide}>
-              <Text style={styles.text}>Example</Text>
-              <Text style={styles.textExample}>
-                Person 1: "Tomatoes"... Person 2: "Tomatoes are"... Person 3:
-                "Tomatoes are horrible..."
-              </Text>
-              <Text style={styles.textExample}>
-                Press 'finished' when you are done
-              </Text>
-            </View>
-          </Swiper>
-        </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            navigation.navigate("FirstRoundScreen4", {
-              players: players,
-            });
-          }}
-        >
-          <Text style={styles.buttonText}>Finished</Text>
+        <TouchableOpacity onPress={loadAndPlaySound} style={styles.soundButton}>
+          <Text style={styles.whistleText}>📣</Text>
         </TouchableOpacity>
+        <Text style={styles.header}>
+          Let us start with a simple game of remembering!
+        </Text>
+        <PagerView
+          style={styles.rulesContainer}
+          initialPage={0}
+          onPageSelected={(e) => setPageIndex(e.nativeEvent.position)}
+        >
+          <View key="1" style={styles.slide}>
+            <Text style={styles.text}>Step 1:</Text>
+            <Text style={styles.text}>
+              You all add a word to a sentence in turns.
+            </Text>
+          </View>
+          <View key="2" style={styles.slide}>
+            <Text style={styles.text}>Step 2:</Text>
+
+            <Text style={styles.text}>
+              Repeat the whole sentence, and add a word each turn.
+            </Text>
+          </View>
+          <View key="3" style={styles.slide}>
+            <Text style={styles.text}>Step 3:</Text>
+
+            <Text style={styles.text}>
+              The first person unable to repeat the whole sentence drinks.
+            </Text>
+          </View>
+        </PagerView>
+        {renderDots(3, pageIndex)}
+        {pageIndex === 2 && ( // Only show the button on the last page
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate("FirstRoundScreen4", { players })
+            }
+          >
+            <Text style={styles.buttonText}>Finished</Text>
+          </TouchableOpacity>
+        )}
       </LinearGradient>
     </View>
   );
@@ -77,11 +100,14 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   header: {
-    fontSize: 50,
+    fontSize: 40,
     fontFamily: "Papyrus-Condensed",
     color: "#FFFFFF",
     fontWeight: "bold",
     textAlign: "center",
+    margin: 10,
+    padding: 10,
+    top: 20,
   },
   button: {
     backgroundColor: "#FFFFFF",
@@ -137,7 +163,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "80%",
-    height: 450,
+    height: 350,
     marginTop: 20,
     marginBottom: 20,
   },
@@ -163,10 +189,49 @@ const styles = StyleSheet.create({
     marginHorizontal: 3,
   },
   activeDotStyle: {
-    backgroundColor: "#FA922F", // Active dot color
+    backgroundColor: "#FA922F",
     width: 8,
     height: 8,
     borderRadius: 4,
+  },
+  dotContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 15,
+  },
+  dot: {
+    height: 10,
+    width: 10,
+    borderRadius: 5,
+    margin: 5,
+  },
+  activeDot: {
+    backgroundColor: "#FFFFFF",
+  },
+  inactiveDot: {
+    backgroundColor: "rgba(255, 255, 255, 0.5)",
+  },
+  whistleText: {
+    color: "white",
+    fontSize: 22,
+    fontFamily: "Noteworthy-Light",
+  },
+  soundButton: {
+    position: "absolute",
+    left: 20,
+    top: 70,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 

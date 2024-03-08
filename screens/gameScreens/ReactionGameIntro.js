@@ -33,7 +33,7 @@ function ReactionGameIntro({ route, navigation }) {
         <TypingAnimation text="Game of reactions" textStyle={styles.header} />
         <TypingAnimation
           text="OK, time for you to test your reactions!🫵 Press the screen as soon as
-          it turns RED. if you press BEFORE it turns red you will lose.... Don't
+          it goes from GREEN🟢 to RED🔴. if you press BEFORE it turns red you will lose.... Don't
           cry about it😥"
           textStyle={styles.text}
           typingSpeed={50} // Optional: Adjust the typing speed as needed

@@ -1,6 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  SafeAreaView,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import axios from "axios";
 
@@ -11,25 +18,21 @@ export default function ChooseCaptionGif({ route, navigation }) {
   const [currentGifIndex, setCurrentGifIndex] = useState(0);
 
   const searchTerms = [
-    "laughing",
     "yuck",
     "party",
     "stressed",
     "clumsy",
     "stoned",
-    "dancing",
-    "scared",
     "excited",
     "disgusted",
-    "drugs",
     "facepalm",
     "high",
     "confused",
     "sexy time",
-    "drunk",
     "weird",
     "instant regret",
     "smash",
+    "tripping",
   ];
 
   const fetchRandomGif = async () => {
@@ -80,31 +83,33 @@ export default function ChooseCaptionGif({ route, navigation }) {
   return (
     <View style={styles.container}>
       <LinearGradient colors={["#D68E8D", "#FA922F"]} style={styles.container}>
-        <Text style={styles.header}>Caption Game</Text>
-        <Text style={styles.text}>
-          Everyone should agree on the chosen GIF before continuing
-        </Text>
+        <SafeAreaView style={styles.container}>
+          <Text style={styles.header}>Caption Game</Text>
+          <Text style={styles.text}>
+            Everyone should agree on the chosen GIF before continuing
+          </Text>
 
-        {currentGif ? (
-          <View style={styles.gifContainer}>
-            <Image source={{ uri: currentGif }} style={styles.gif} />
-            <TouchableOpacity
-              style={[styles.button, styles.newGifButton]}
-              onPress={handleGenerateNewGif}
-            >
-              <Text style={styles.gifButtonText}>Generate New GIF</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <Text>Loading...</Text>
-        )}
-        <TouchableOpacity
-          style={[styles.button, styles.okButton]}
-          onPress={handleOkPress}
-        >
-          <Text style={styles.buttonText}>OK, Choose this GIF</Text>
-        </TouchableOpacity>
-        <StatusBar style="auto" />
+          {currentGif ? (
+            <View style={styles.gifContainer}>
+              <Image source={{ uri: currentGif }} style={styles.gif} />
+              <TouchableOpacity
+                style={[styles.button, styles.newGifButton]}
+                onPress={handleGenerateNewGif}
+              >
+                <Text style={styles.gifButtonText}>Generate New GIF</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <Text>Loading...</Text>
+          )}
+          <TouchableOpacity
+            style={[styles.button, styles.okButton]}
+            onPress={handleOkPress}
+          >
+            <Text style={styles.buttonText}>OK, Choose this GIF</Text>
+          </TouchableOpacity>
+          <StatusBar style="auto" />
+        </SafeAreaView>
       </LinearGradient>
     </View>
   );

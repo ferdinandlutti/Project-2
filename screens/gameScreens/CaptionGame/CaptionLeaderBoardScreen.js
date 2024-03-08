@@ -19,8 +19,8 @@ export default function CaptionLeaderboardScreen({ route, navigation }) {
     }))
     .sort((a, b) => b.votes - a.votes);
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <LinearGradient colors={["#6DD5FA", "#FFFFFF"]} style={styles.fullScreen}>
+    <LinearGradient colors={["orange", "#FFFFFF"]} style={styles.fullScreen}>
+      <SafeAreaView style={{ flex: 1 }}>
         <Text style={styles.header}>Caption Game Leaderboard</Text>
         <ScrollView style={styles.container}>
           {sortedCaptions.map((caption, index) => (
@@ -34,18 +34,30 @@ export default function CaptionLeaderboardScreen({ route, navigation }) {
             </View>
           ))}
         </ScrollView>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() =>
-            navigation.navigate("HeadToHeadIntro", {
-              players: players,
-            })
-          }
-        >
-          <Text style={styles.buttonText}>Head To Head Battle</Text>
-        </TouchableOpacity>
-      </LinearGradient>
-    </SafeAreaView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.button2}
+            onPress={() =>
+              navigation.navigate("CaptionGameIntro", {
+                players: players,
+              })
+            }
+          >
+            <Text style={styles.buttonText2}>Play Again!</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() =>
+              navigation.navigate("HeadToHeadIntro", {
+                players: players,
+              })
+            }
+          >
+            <Text style={styles.buttonText}>Next Round</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
 
@@ -55,10 +67,13 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    width: "100%",
+    height: "100%",
   },
   header: {
     fontSize: 24,
     fontWeight: "bold",
+    fontFamily: "Noteworthy-Light",
     color: "#FFFFFF",
     textAlign: "center",
     marginVertical: 20,
@@ -86,16 +101,61 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   button: {
-    backgroundColor: "#6DD5FA",
-    padding: 10,
-    borderRadius: 20,
+    backgroundColor: "#FFFFFF",
+    width: "60%",
+    height: 60,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    shadowColor: "#000",
     justifyContent: "center",
-    alignItems: "center",
-    margin: 20,
+    alignSelf: "center",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+    bottom: 50,
+    margin: 40,
+  },
+  button2: {
+    backgroundColor: "#FFFFFF",
+    width: "40%",
+    height: 60,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    shadowColor: "#000",
+    justifyContent: "center",
+    alignSelf: "center",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+    bottom: 40,
+    margin: 40,
   },
   buttonText: {
-    color: "#FFFFFF",
-    fontSize: 18,
+    color: "#FA922F",
+    fontSize: 22,
+    fontFamily: "Noteworthy-Light",
     fontWeight: "bold",
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText2: {
+    color: "grey",
+    fontSize: 22,
+    fontFamily: "Noteworthy-Light",
+    fontWeight: "bold",
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

@@ -28,6 +28,7 @@ const ReactionResultsScreen = ({ route, navigation }) => {
           <TypingAnimation
             text={`Woow ${winnerName}, you are completely DESTROYING your opponents today!`}
             textStyle={{ fontSize: 24, color: "white" }}
+            typingSpeed={50}
           />
 
           <Image

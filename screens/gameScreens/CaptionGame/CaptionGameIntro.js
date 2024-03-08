@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import TypingAnimation from "../assets/TypingAnimation";
 import { Audio } from "expo-av";
@@ -30,12 +30,10 @@ export default function CaptionGameIntro({ navigation, route }) {
         <TouchableOpacity onPress={loadAndPlaySound} style={styles.soundButton}>
           <Text style={styles.whistleText}>📣</Text>
         </TouchableOpacity>
+        <Text style={styles.header}>Time for The Caption Game!🍹🙌</Text>
+
         <TypingAnimation
-          text="Time for The Caption Game!🍹🙌"
-          textStyle={styles.header}
-        />
-        <TypingAnimation
-          text="Choose the perfect GIF! Every player adds a caption to this GIF. Afterwards every player votes for their favorite."
+          text="Choose the perfect GIF! Every player adds a caption to this GIF. Afterwards, every player votes for their favorite."
           textStyle={styles.text}
           typingSpeed={50} // Optional: Adjust the typing speed as needed
         />

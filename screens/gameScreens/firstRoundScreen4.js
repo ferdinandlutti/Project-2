@@ -66,7 +66,7 @@ function FirstRoundScreen4({ route, navigation }) {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("SecondRoundScreen", {
+            navigation.navigate("ReactionGameIntro", {
               players: players,
             });
           }}

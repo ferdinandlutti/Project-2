@@ -41,7 +41,7 @@ const ReactionLeaderboard = ({ route, navigation }) => {
             <Text style={styles.buttonText}>Next Round</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.playAgainButton} // Create a new style for this if you want different styling than the next round button
+            style={styles.playAgainButton}
             onPress={() => {
               navigation.navigate("ReactionGameIntro", {
                 players: players,
@@ -68,9 +68,11 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 35,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 40,
     fontFamily: "Papyrus-Condensed",
     color: "white",
+    alignSelf: "center",
+    marginTop: 20,
   },
   resultRow: {
     flexDirection: "row",

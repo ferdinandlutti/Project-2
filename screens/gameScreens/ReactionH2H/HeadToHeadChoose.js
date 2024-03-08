@@ -17,6 +17,7 @@ function HeadToHeadChoose({ route, navigation }) {
     <View style={styles.container}>
       <LinearGradient colors={["#B1743F", "#DB7C29"]} style={styles.container}>
         <Text style={styles.header}>Head To Head Battle</Text>
+
         {contestants.length > 0 && (
           <>
             <Text style={styles.text}>Contestants</Text>
@@ -26,10 +27,10 @@ function HeadToHeadChoose({ route, navigation }) {
           </>
         )}
         <TouchableOpacity
-          style={styles.button}
+          style={styles.refreshButton}
           onPress={selectRandomContestants}
         >
-          <Text style={styles.buttonText}>
+          <Text style={styles.refreshButtonText}>
             {contestants.length > 0
               ? "Regenerate Contestants"
               : "Generate Contestants"}
@@ -99,10 +100,38 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     marginTop: 30,
+    top: 90,
+  },
+  refreshButton: {
+    backgroundColor: "#FFFFFF",
+    width: "50%",
+    height: 60,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 25,
+    shadowColor: "#000",
+    justifyContent: "center",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 3.84,
+    elevation: 5,
+    marginTop: 30,
   },
   buttonText: {
     color: "#FA922F",
     fontSize: 22,
+    fontFamily: "Noteworthy-Light",
+    fontWeight: "bold",
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  refreshButtonText: {
+    color: "#FA922F",
+    fontSize: 15,
     fontFamily: "Noteworthy-Light",
     fontWeight: "bold",
     textAlign: "center",
