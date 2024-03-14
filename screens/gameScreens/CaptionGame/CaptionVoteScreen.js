@@ -10,12 +10,31 @@ import {
   SafeAreaView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+const shuffleArray = (array) => {
+  let currentIndex = array.length,
+    randomIndex;
+
+  while (currentIndex !== 0) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+
+  return array;
+};
 
 export default function CaptionVoteScreen({ navigation, route }) {
   const { gifUrl, players, captions } = route.params;
   const [currentVoterIndex, setCurrentVoterIndex] = useState(0);
   const [votes, setVotes] = useState(Array(captions.length).fill(0));
   const [showModal, setShowModal] = useState(false);
+  const [shuffledIndices, setShuffledIndices] = useState([]);
 
   const handleVote = (captionIndex) => {
     setVotes((currentVotes) => {
@@ -33,6 +52,10 @@ export default function CaptionVoteScreen({ navigation, route }) {
     }
   };
   console.log(votes);
+  useEffect(() => {
+    // Generate an array of caption indices and shuffle it
+    setShuffledIndices(shuffleArray(Array.from(captions.keys())));
+  }, [captions]);
 
   useEffect(() => {
     if (currentVoterIndex >= players.length) {
@@ -43,6 +66,7 @@ export default function CaptionVoteScreen({ navigation, route }) {
       });
     }
   }, [currentVoterIndex, players.length, captions, votes, navigation]);
+
   return (
     <View style={styles.container}>
       <LinearGradient colors={["orange", "#FFFFFF"]} style={styles.container}>
@@ -80,13 +104,13 @@ export default function CaptionVoteScreen({ navigation, route }) {
             {players[currentVoterIndex]}'s turn to vote:
           </Text>
           <ScrollView contentContainerStyle={styles.captionsContainer}>
-            {captions.map((caption, index) => (
+            {shuffledIndices.map((index) => (
               <TouchableOpacity
                 key={index}
                 style={styles.captionBox}
-                onPress={() => handleVote(index)}
+                onPress={() => handleVote(index)} // Pass the original index for voting
               >
-                <Text style={styles.captionText}>“{caption.text}”</Text>
+                <Text style={styles.captionText}>“{captions[index].text}”</Text>
               </TouchableOpacity>
             ))}
           </ScrollView>

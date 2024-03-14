@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
-const MusicElimination = ({ route, navigation }) => {
+const MusicElimination1 = ({ route, navigation }) => {
   const { players } = route.params;
 
   return (
@@ -24,7 +24,7 @@ const MusicElimination = ({ route, navigation }) => {
           <TouchableOpacity
             style={styles.button}
             onPress={() => {
-              navigation.navigate("MusicElimination1", {
+              navigation.navigate("SecondRoundScreen", {
                 players: players,
               });
             }}
@@ -86,4 +86,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MusicElimination;
+export default MusicElimination1;

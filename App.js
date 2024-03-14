@@ -24,6 +24,7 @@ import HeadToHeadChoose from "./screens/gameScreens/ReactionH2H/HeadToHeadChoose
 import HeadToHeadBattleScreen from "./screens/gameScreens/ReactionH2H/HeadToHeadBattleScreen";
 import ReactionGameIntro from "./screens/gameScreens/ReactionGameIntro";
 import HeadToHeadRules from "./screens/gameScreens/ReactionH2H/HeadToHeadRules";
+import MusicElimination1 from "./screens/gameScreens/MusicElimination1";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -121,6 +122,10 @@ export default function App() {
             component={HeadToHeadBattleScreen}
           />
           <Stack.Screen name="HeadToHeadRules" component={HeadToHeadRules} />
+          <Stack.Screen
+            name="MusicElimination1"
+            component={MusicElimination1}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>
