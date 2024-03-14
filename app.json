@@ -11,13 +11,14 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
       "buildNumber": "1.0.0",
-      "bundleIdentifier": "com.ferdinandluttichau.BenderGame"
+      "bundleIdentifier": "com.ferdinandluttichau.BenderGame",
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "This app requires access to the microphone to upload custom video clips."
+      }
     },
     "android": {
       "adaptiveIcon": {
