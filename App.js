@@ -24,7 +24,11 @@ import HeadToHeadChoose from "./screens/gameScreens/ReactionH2H/HeadToHeadChoose
 import HeadToHeadBattleScreen from "./screens/gameScreens/ReactionH2H/HeadToHeadBattleScreen";
 import ReactionGameIntro from "./screens/gameScreens/ReactionGameIntro";
 import HeadToHeadRules from "./screens/gameScreens/ReactionH2H/HeadToHeadRules";
-import MusicElimination1 from "./screens/gameScreens/MusicElimination1";
+import MargreteskaalIntro from "./screens/gameScreens/MargreteskaalIntro";
+import MargreteSkaalNames from "./screens/gameScreens/MargreteskaalNames";
+import ChooseGameScreen from "./screens/ChooseGameScreen";
+import MSRound1 from "./screens/gameScreens/MSRound1";
+import MSTeamCreation from "./screens/gameScreens/MSTeamCreation";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -98,7 +102,11 @@ export default function App() {
             name="ReactionLeaderboard"
             component={ReactionLeaderboard}
           />
-          <Stack.Screen name="MusicElimination" component={MusicElimination} />
+          <Stack.Screen
+            name="MargreteskaalIntro"
+            component={MargreteskaalIntro}
+          />
+
           <Stack.Screen name="SimpleChallenges" component={SimpleChallenges} />
           <Stack.Screen name="CaptionGameIntro" component={CaptionGameIntro} />
 
@@ -111,6 +119,7 @@ export default function App() {
             name="CaptionVoteScreen"
             component={CaptionVoteScreen}
           />
+          <Stack.Screen name="ChooseGameScreen" component={ChooseGameScreen} />
           <Stack.Screen
             name="CaptionLeaderboardScreen"
             component={CaptionLeaderboardScreen}
@@ -123,9 +132,11 @@ export default function App() {
           />
           <Stack.Screen name="HeadToHeadRules" component={HeadToHeadRules} />
           <Stack.Screen
-            name="MusicElimination1"
-            component={MusicElimination1}
+            name="MargreteskaalNames"
+            component={MargreteSkaalNames}
           />
+          <Stack.Screen name="MSRound1" component={MSRound1} />
+          <Stack.Screen name="MSTeamCreation" component={MSTeamCreation} />
         </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>

@@ -19,7 +19,7 @@ const MusicElimination = ({ route, navigation }) => {
     >
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.container}>
-          <Text style={styles.header}>Music Elimination Round</Text>
+          <Text style={styles.header}>Margreteskål</Text>
 
           <TouchableOpacity
             style={styles.button}
