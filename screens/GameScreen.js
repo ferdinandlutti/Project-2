@@ -59,7 +59,7 @@ export default function GameScreen({ navigation, route }) {
           style={styles.button}
           onPress={() => {
             if (players.length > 1) {
-              navigation.navigate("CaptionGameIntro", {
+              navigation.navigate("ReactionGameIntro", {
                 // FirstRoundScreen
                 players: players,
               });

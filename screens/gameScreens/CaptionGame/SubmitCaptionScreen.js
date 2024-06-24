@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { CountdownCircleTimer } from "react-native-countdown-circle-timer";
-
 export default function SubmitCaptionScreen({ navigation, route }) {
   const {
     gifUrl,
@@ -21,6 +20,8 @@ export default function SubmitCaptionScreen({ navigation, route }) {
     currentPlayerIndex = 0,
     captions = [],
   } = route.params;
+  console.log(gifUrl);
+
   const [inputCaption, setInputCaption] = useState("");
   const [timerKey, setTimerKey] = useState(0);
   const [showVoteModal, setShowVoteModal] = useState(false);

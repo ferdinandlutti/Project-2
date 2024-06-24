@@ -56,7 +56,6 @@ export default function ChooseCaptionGif({ route, navigation }) {
   useEffect(() => {
     fetchRandomGif();
   }, []);
-
   const handleOkPress = () => {
     navigation.navigate("SubmitCaptionScreen", {
       gifUrl: currentGif,
