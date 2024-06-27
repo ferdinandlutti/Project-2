@@ -6,7 +6,7 @@ import TypingAnimation from "./assets/TypingAnimation";
 import { Audio } from "expo-av";
 
 function MSRound1({ route, navigation }) {
-  const { players } = route.params;
+  const { teams, names } = route.params;
   const [sound, setSound] = useState();
 
   async function loadAndPlaySound() {
@@ -40,9 +40,9 @@ function MSRound1({ route, navigation }) {
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
-            navigation.navigate("ReactionGameScreen", {
-              players: players,
-              names: Object.values(newNames).flat(),
+            navigation.navigate("MSRound1PlayerTurnIntro", {
+              teams,
+              names,
             });
           }}
         >

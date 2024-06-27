@@ -1,22 +1,21 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Picker } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 
 const MSTeamCreation = ({ route, navigation }) => {
   const { players, names } = route.params;
   const [selectedTeamCount, setSelectedTeamCount] = useState(null);
   const [teams, setTeams] = useState([]);
 
-  // Calculate the possible team options based on the number of players
   const calculateTeamOptions = () => {
     let options = [];
-    if (players.length % 2 === 0) {
-      options.push(2);
-      if (players.length % 4 === 0) {
-        options.push(4);
+    for (let i = 2; i <= Math.ceil(players.length / 2); i++) {
+      if (players.length % i === 0 && players.length / i >= 2) {
+        options.push(i);
       }
     }
-    if (players.length % 3 === 0 || players.length - 3 >= 3) {
-      options.push(3);
+    if (players.length / 2 >= 2 && !options.includes(2)) {
+      options.push(2);
     }
     return options.sort();
   };
@@ -28,7 +27,7 @@ const MSTeamCreation = ({ route, navigation }) => {
       teams[index % selectedTeamCount].push(player);
     });
     setTeams(teams);
-    navigation.navigate("GameScreen", { teams, names }); // Assuming you pass teams and names to the game logic
+    navigation.navigate("MSTeamsScreen", { teams, names });
   };
 
   return (

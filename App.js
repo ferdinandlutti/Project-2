@@ -29,6 +29,9 @@ import MargreteSkaalNames from "./screens/gameScreens/MargreteskaalNames";
 import ChooseGameScreen from "./screens/ChooseGameScreen";
 import MSRound1 from "./screens/gameScreens/MSRound1";
 import MSTeamCreation from "./screens/gameScreens/MSTeamCreation";
+import MSTeamsScreen from "./screens/gameScreens/MSTeamsScreen";
+import MSRound1PlayerTurn from "./screens/gameScreens/MSRound1PlayerTurn";
+import MSRound1PlayerTurnIntro from "./screens/gameScreens/MSRound1PlayerTurnIntro";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -137,6 +140,15 @@ export default function App() {
           />
           <Stack.Screen name="MSRound1" component={MSRound1} />
           <Stack.Screen name="MSTeamCreation" component={MSTeamCreation} />
+          <Stack.Screen name="MSTeamsScreen" component={MSTeamsScreen} />
+          <Stack.Screen
+            name="MSRound1PlayerTurn"
+            component={MSRound1PlayerTurn}
+          />
+          <Stack.Screen
+            name="MSRound1PlayerTurnIntro"
+            component={MSRound1PlayerTurnIntro}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </DataProvider>

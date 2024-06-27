@@ -3,7 +3,7 @@
     "name": "Bender-Game",
     "slug": "Bender-Game",
     "version": "1.0.1",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "icon": "./assets/images/app-image.png",
     "userInterfaceStyle": "light",
     "splash": {
